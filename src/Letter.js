@@ -5,22 +5,29 @@ function Letter() {
   const [letters, setLetters] = useState([]);
   const [message, setMessage] = useState("");
 
+  const validateInput = aLetter => {
+      const accepted = /[a-zA-Z]/;
+      if (aLetter && accepted.test(aLetter) && aLetter.length === 1) {
+        const guess = aLetter.toUpperCase();
+        console.log(guess);
+        if (!letters.includes(guess)) {
+          setLetters([...letters, guess]);
+        } else {
+          setMessage(`You already guessed ${guess}, silly :P`);
+        }
+        setLetter("");
+      } else {
+        setMessage("Please enter one letter from A to Z");
+        setLetter("");
+      }
+  }
+
   const handleSubmit = (e) => {
     setMessage("");
     e.preventDefault();
-    if (letter) {
-      const guess = letter.toUpperCase();
-      console.log(guess);
-      if (!letters.includes(guess)) {
-        setLetters([...letters, guess]);
-      } else {
-        setMessage(`You already guessed ${guess}, silly :P`);
-      }
-      setLetter("");
-    } else {
-      setMessage("Please enter a letter from A to Z");
-    }
+    validateInput(letter);
   };
+
   return (
     <section>
       <h4>{letters}</h4>
