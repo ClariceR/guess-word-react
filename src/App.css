@@ -41,3 +41,7 @@
   color: white;
   font-size: 1rem;
 }
+
+.placeholder {
+  letter-spacing: .5rem;
+}
