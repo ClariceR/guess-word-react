@@ -4,7 +4,10 @@ function Placeholder({word}) {
     const [placeholder, setPlaceholder] = useState("");
 
     const getPlaceholder = word => {
-        console.log(word)
+        let hiddenWord = Array.prototype.map.call(word, eachLetter => { return '*'});
+        console.log(hiddenWord);
+        setPlaceholder(hiddenWord);
+        console.log(placeholder);
     }
     return (
         <div>
