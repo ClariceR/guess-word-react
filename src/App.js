@@ -1,24 +1,24 @@
+import { useState } from 'react';
 import logo from './logo.svg';
+import Header from './Header';
+import Message from './Message';
+import Placeholder from './Placeholder';
+
 import './App.css';
 
 function App() {
+  const [word, setWord] = useState('magnolia');
+  const [guess, setGuess] = useState(8);
+
+  const [wordInProgress, setWordInProgress] = useState('');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Header />
+    <Message />
+    <Placeholder word={word}/>
+    <h4>{`You have ${guess} guesses remaining`}</h4>
+    </>
   );
 }
 
