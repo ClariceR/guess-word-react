@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function Game({word}) {
-  const [wordInProgress, setWordInProgress] = useState(word);
+function Game({ word, fetchWord }) {
+  const [wordInProgress, setWordInProgress] = useState("");
 
-  const inicialPlaceholder = (word) => {
-     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
-       return " _ ";
-     });
-     setWordInProgress(hiddenWord);
-     console.log(wordInProgress)
-  }
-  return <>
-      <button onClick={() => inicialPlaceholder(wordInProgress)}>Get Word</button>
-      <h2>{wordInProgress}</h2>
-  </>;
+  const getPlaceholder = (word) => {
+    let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
+      return " * ";
+    });
+    return setWordInProgress(hiddenWord);
+  };
+
+  useEffect(() => {
+    getPlaceholder(word);
+    console.log(...wordInProgress);
+  }, [fetchWord]);
+
+  return (
+    <>
+      <div>{console.log(`getting word prop from App into Game: ${word}`)}</div>
+      <h1>{wordInProgress}</h1>
+    </>
+  );
 }
 
 export default Game;
