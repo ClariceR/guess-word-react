@@ -42,7 +42,15 @@ function Game({ word, fetchWord }) {
     }
   };
 
-  const handleInput = (letter) => {};
+  const handleInput = (letter) => {
+    const letterUpper = letter.toUpperCase();
+    if (!letters.includes(letterUpper)) {
+      setLetters([...letters, letterUpper]);
+    } else {
+      setMessage(`You already guessed ${letterUpper}, silly :P`);
+    }
+    console.log(letters);
+  };
 
   //   const acceptLetter = (letter) => {
   //     if (isInputValid(letter)) {
@@ -68,7 +76,6 @@ function Game({ word, fetchWord }) {
     setLetter("");
     setMessage("");
     e.preventDefault();
-    // handleInput(letter);
     acceptInput(letter);
   };
   return (
