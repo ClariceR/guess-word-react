@@ -4,7 +4,7 @@ function Game({ word, fetchWord }) {
   const [wordInProgress, setWordInProgress] = useState("");
   const [letter, setLetter] = useState("");
   const [letters, setLetters] = useState([]);
-  //   const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const getPlaceholder = (word) => {
     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
@@ -18,36 +18,58 @@ function Game({ word, fetchWord }) {
     console.log(...wordInProgress);
   }, [fetchWord]);
 
-  const isLetter = (input) => {
-    return /[a-zA-Z]/.test(input);
+  const isLetter = (letter) => {
+    return /[a-zA-Z]/.test(letter);
   };
 
-  const isLengthValid = (input) => {
-    return input.length === 1;
+  const isLengthValid = (letter) => {
+    return letter.length === 1;
   };
 
-  const isInputValid = (input) => {
-    return isLetter(input) && isLengthValid(input);
+  const isInputValid = (letter) => {
+    return isLetter(letter) && isLengthValid(letter);
   };
 
-  const acceptLetter = (letter) => {
+  const acceptInput = (letter) => {
     if (isInputValid(letter)) {
-      if (!letters.includes(letter)) {
-        setLetters([...letters, letter]);
-      }
-      console.log(letters)
+      handleInput(letter);
     } else {
-      console.log("loggin a message to say it is invalid");
+      if (!isLetter(letter)) {
+        setMessage("Please enter a letter from A to Z");
+      } else {
+        setMessage("Please enter only one letter at a time");
+      }
     }
   };
+
+  const handleInput = (letter) => {};
+
+  //   const acceptLetter = (letter) => {
+  //     if (isInputValid(letter)) {
+  //       if (!letters.includes(letter)) {
+  //         setLetters([...letters, letter]);
+  //       }
+  //       console.log(letters);
+  //     } else {
+  //       helperMessages(letter);
+  //     }
+  //   };
+
+  //   const helperMessages = (letter) => {
+  //     if (!isLetter(letter)) setMessage("Please enter a letter from A to Z");
+  //     if (!isLengthValid(letter)) setMessage("Please enter one letter at a time");
+  //   };
 
   const handleChange = (e) => {
     setLetter(e.target.value);
   };
 
   const handleSubmit = (e) => {
+    setLetter("");
+    setMessage("");
     e.preventDefault();
-    acceptLetter(letter);
+    // handleInput(letter);
+    acceptInput(letter);
   };
   return (
     <>
@@ -66,7 +88,7 @@ function Game({ word, fetchWord }) {
         <button type="submit" onClick={handleSubmit}>
           GUESS
         </button>
-        {/* <p>{message}</p> */}
+        <p>{message}</p>
       </form>
     </>
   );
