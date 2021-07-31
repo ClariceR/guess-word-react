@@ -15,7 +15,7 @@ function Game({ word, fetchWord }) {
 
   useEffect(() => {
     getPlaceholder(word);
-    console.log(...wordInProgress);
+    console.log("...wip from useEffect:" + [...wordInProgress]);
   }, [fetchWord]);
 
   const isLetter = (letter) => {
@@ -42,31 +42,33 @@ function Game({ word, fetchWord }) {
     }
   };
 
+  const updateWordInProgress = (word, wordInProgress, letterUpper) => {
+    [...word].map((element, index, letter) => {
+      if (element === letterUpper) {
+        console.log(`e=l: ${element} = ${letterUpper}`);
+        let updatedWordInP = wordInProgress;
+        updatedWordInP[index] = letterUpper;
+        setWordInProgress(updatedWordInP);
+        console.log("uwip:" + updatedWordInP);
+      }
+      console.log("e:" + element);
+      console.log("i:" + index);
+      console.log("a:" + letterUpper);
+      console.log("wip:" + wordInProgress);
+      console.log("word:" + word);
+    });
+  };
+
   const handleInput = (letter) => {
     const letterUpper = letter.toUpperCase();
     if (!letters.includes(letterUpper)) {
       setLetters([...letters, letterUpper]);
+      updateWordInProgress(word, wordInProgress, letterUpper);
     } else {
       setMessage(`You already guessed ${letterUpper}, silly :P`);
     }
     console.log(letters);
   };
-
-  //   const acceptLetter = (letter) => {
-  //     if (isInputValid(letter)) {
-  //       if (!letters.includes(letter)) {
-  //         setLetters([...letters, letter]);
-  //       }
-  //       console.log(letters);
-  //     } else {
-  //       helperMessages(letter);
-  //     }
-  //   };
-
-  //   const helperMessages = (letter) => {
-  //     if (!isLetter(letter)) setMessage("Please enter a letter from A to Z");
-  //     if (!isLengthValid(letter)) setMessage("Please enter one letter at a time");
-  //   };
 
   const handleChange = (e) => {
     setLetter(e.target.value);
@@ -83,6 +85,7 @@ function Game({ word, fetchWord }) {
       <h2>Guess the Word</h2>
       <div>{console.log(`getting word prop from App into Game: ${word}`)}</div>
       <h1>{wordInProgress}</h1>
+      <h2>{letters}</h2>
       <form>
         <label htmlFor="letter">Type a letter:</label>
         <input

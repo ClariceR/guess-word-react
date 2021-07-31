@@ -18,7 +18,7 @@ function App() {
       let randomIndex = Math.floor(Math.random() * wordsArray.length);
       const randomWord = wordsArray[randomIndex].trim();
       setLoading(false)
-      setWord(randomWord);
+      setWord(randomWord.toUpperCase());
       console.log(`From fetchWord we got: ${randomWord}`);
     } catch (error) {
       setLoading(false);
