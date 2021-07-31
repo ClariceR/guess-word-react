@@ -6,6 +6,9 @@ function Game({ word, fetchWord }) {
   const [letters, setLetters] = useState([]);
   const [message, setMessage] = useState("");
   const [guessesLeft, setGuessesLeft] = useState(8);
+  const [guessCountMessage, setGuessCountMessage] = useState(
+    `You have ${guessesLeft} guesses left.`
+  );
 
   const getPlaceholder = (word) => {
     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
@@ -31,13 +34,19 @@ function Game({ word, fetchWord }) {
     return isLetter(letter) && isLengthValid(letter);
   };
 
-  const updateGuessesLeft = () => {
+  const updateGuessesLeft = (guessesLeft) => {
     setGuessesLeft(guessesLeft - 1);
+    getGuessCountMessage(guessesLeft);
+  };
+
+  const getGuessCountMessage = (guessesLeft) => {
+    console.log(`from get guess count message: ${guessesLeft}`);
+    guessesLeft > 1
+      ? setGuessCountMessage(`You have ${guessesLeft} guesses left.`)
+      : setGuessCountMessage(`This is your last guess`);
   };
 
   const isGoodGuess = (letterUpper) => {
-    console.log("from is good guess:" + word + " " + letter);
-    console.log(word.includes(letterUpper));
     return word.includes(letterUpper);
   };
 
@@ -45,7 +54,7 @@ function Game({ word, fetchWord }) {
     if (isGoodGuess(letterUpper)) {
       updateWordInProgress(word, wordInProgress, letterUpper);
     } else {
-      updateGuessesLeft();
+      updateGuessesLeft(guessesLeft);
       console.log(guessesLeft);
     }
   };
@@ -98,6 +107,7 @@ function Game({ word, fetchWord }) {
       <h2>Guess the Word</h2>
       <div>{console.log(`getting word prop from App into Game: ${word}`)}</div>
       <h1>{wordInProgress}</h1>
+      <p>{guessCountMessage}</p>
       <h2>{letters}</h2>
       <form>
         <label htmlFor="letter">Type a letter:</label>
