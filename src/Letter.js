@@ -1,26 +1,35 @@
 import React, { useState } from "react";
+// import Placeholder from "./Placeholder";
 
-function Letter() {
+function Letter({ word }) {
   const [letter, setLetter] = useState("");
   const [letters, setLetters] = useState([]);
   const [message, setMessage] = useState("");
+  const [guess, setGuess] = useState(8);
 
-  const validateInput = aLetter => {
-      const accepted = /[a-zA-Z]/;
-      if (aLetter && accepted.test(aLetter) && aLetter.length === 1) {
-        const guess = aLetter.toUpperCase();
-        console.log(guess);
-        if (!letters.includes(guess)) {
-          setLetters([...letters, guess]);
-        } else {
-          setMessage(`You already guessed ${guess}, silly :P`);
-        }
-        setLetter("");
+//   const updateNumGuesses = () => {
+//     setGuess(guess - 1);
+//     if (guess === 0) {
+//       console.log("No more guesses remaining");
+//     }
+//   };
+
+  const validateInput = (aLetter) => {
+    const accepted = /[a-zA-Z]/;
+    if (aLetter && accepted.test(aLetter) && aLetter.length === 1) {
+      const guess = aLetter.toUpperCase();
+    //   console.log(guess);
+      if (!letters.includes(guess)) {
+        setLetters([...letters, guess]);
       } else {
-        setMessage("Please enter one letter from A to Z");
-        setLetter("");
+        setMessage(`You already guessed ${guess}, silly :P`);
       }
-  }
+      setLetter("");
+    } else {
+      setMessage("Please enter one letter from A to Z");
+      setLetter("");
+    }
+  };
 
   const handleSubmit = (e) => {
     setMessage("");
@@ -30,6 +39,8 @@ function Letter() {
 
   return (
     <section>
+      <Placeholder word={word} letter={letter} />
+      <h4>{`You have ${guess} guesses remaining`}</h4>
       <h4>{letters}</h4>
       <form onSubmit={handleSubmit}>
         <label htmlFor="letter">Type one letter:</label>
@@ -43,9 +54,6 @@ function Letter() {
         <button type="submit">GUESS</button>
         <p>{message}</p>
       </form>
-      {/* <h5>Type one letter</h5>
-            <input type="text" value={letter}/>
-            <button onClick={() => getLetter}>GUESS</button> */}
     </section>
   );
 }
