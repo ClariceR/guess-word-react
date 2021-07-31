@@ -5,6 +5,7 @@ function Game({ word, fetchWord }) {
   const [letter, setLetter] = useState("");
   const [letters, setLetters] = useState([]);
   const [message, setMessage] = useState("");
+  const [guessesLeft, setGuessesLeft] = useState(8);
 
   const getPlaceholder = (word) => {
     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
@@ -30,6 +31,25 @@ function Game({ word, fetchWord }) {
     return isLetter(letter) && isLengthValid(letter);
   };
 
+  const updateGuessesLeft = () => {
+    setGuessesLeft(guessesLeft - 1);
+  };
+
+  const isGoodGuess = (letterUpper) => {
+    console.log("from is good guess:" + word + " " + letter);
+    console.log(word.includes(letterUpper));
+    return word.includes(letterUpper);
+  };
+
+  const makeGuess = (letterUpper) => {
+    if (isGoodGuess(letterUpper)) {
+      updateWordInProgress(word, wordInProgress, letterUpper);
+    } else {
+      updateGuessesLeft();
+      console.log(guessesLeft);
+    }
+  };
+
   const acceptInput = (letter) => {
     if (isInputValid(letter)) {
       handleInput(letter);
@@ -45,17 +65,10 @@ function Game({ word, fetchWord }) {
   const updateWordInProgress = (word, wordInProgress, letterUpper) => {
     [...word].map((element, index, letter) => {
       if (element === letterUpper) {
-        console.log(`e=l: ${element} = ${letterUpper}`);
         let updatedWordInP = wordInProgress;
         updatedWordInP[index] = letterUpper;
         setWordInProgress(updatedWordInP);
-        console.log("uwip:" + updatedWordInP);
       }
-      console.log("e:" + element);
-      console.log("i:" + index);
-      console.log("a:" + letterUpper);
-      console.log("wip:" + wordInProgress);
-      console.log("word:" + word);
     });
   };
 
@@ -63,7 +76,7 @@ function Game({ word, fetchWord }) {
     const letterUpper = letter.toUpperCase();
     if (!letters.includes(letterUpper)) {
       setLetters([...letters, letterUpper]);
-      updateWordInProgress(word, wordInProgress, letterUpper);
+      makeGuess(letterUpper);
     } else {
       setMessage(`You already guessed ${letterUpper}, silly :P`);
     }
