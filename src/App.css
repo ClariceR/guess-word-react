@@ -2,12 +2,6 @@
   box-sizing: border-box;
 }
 
-.container {
-  border: 1px solid lightseagreen;
-  height: 90vh;
-  width: 90vw;
-}
-
 .grid {
   display: grid;
   justify-content: center;
@@ -15,7 +9,15 @@
   justify-items: center;
   height: 100vh;
   margin: 0 auto;
-  border: 1px solid green;
+  background-color: rgb(247, 188, 176);
+}
+
+.container {
+  background-color: rgb(101, 139, 254);
+  height: 90%;
+  width: 90vw;
+  margin: 1rem 0;
+  box-shadow: 5px 5px black;
 }
 
 .flex-column {
@@ -28,26 +30,45 @@
   justify-content: space-between;
 }
 
+.f-jc-c {
+  justify-content: center;
+}
+
 @media (min-width: 48em) {
   .container {
-    height: 70vh;
-    width: 50vw;
+    height: 80vh;
+    min-height: 476px;
+    width: 60vw;
   }
 }
 
 .title {
-  font-family: 'Turret Road', cursive;
+  font-family: "Turret Road", cursive;
   font-size: 3rem;
   word-spacing: 1px;
+  color: floralwhite;
 }
 
 span {
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .placeholder {
-  font-family: 'Press Start 2P', cursive;
+  font-family: "Press Start 2P", cursive;
   letter-spacing: 0.5rem;
+  color: rgb(208, 34, 0);
+  background-color: rgb(254, 154, 51);
+  padding: 1rem;
+  border: 3px solid black;
+}
+
+.reserved-place {
+  height: 60px;
+}
+
+.letters {
+  letter-spacing: 0.5rem;
+  font-family: "Turret Road", sans-serif;
 }
 
 label {
@@ -56,7 +77,8 @@ label {
   margin-bottom: 1rem;
 }
 
-input, button {
+input,
+button {
   padding: 0.5rem 0;
   text-align: center;
   font-size: 2rem;
@@ -64,7 +86,29 @@ input, button {
   margin-bottom: 1rem;
 }
 
+input {
+  outline: 3px solid black;
+}
+
+input:focus {
+  outline: 3px solid rgb(254, 154, 51);
+}
+
 button {
   font-size: 1rem;
-  font-family: 'Press Start 2P', cursive;
+  font-family: "Press Start 2P", cursive;
+  color: floralwhite;
+  padding-top: 0.75rem;
+  border: none;
+  background-color: rgb(208, 34, 0);
+  box-shadow: 5px 5px black;
+}
+
+button:hover {
+  box-shadow: inset 3px 3px rgb(254, 154, 51), 5px 5px black;
+}
+
+button:active {
+  box-shadow: inset 3px 3px rgb(254, 154, 51);
+  transform: translate(4px, 4px);
 }

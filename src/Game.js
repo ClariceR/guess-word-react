@@ -87,7 +87,7 @@ function Game({ word, fetchWord }) {
       setLetters([...letters, letterUpper]);
       makeGuess(letterUpper);
     } else {
-      setMessage(`You already guessed ${letterUpper}, silly :P`);
+      setMessage(`You already guessed ${letterUpper}, silly!`);
     }
     console.log(letters);
   };
@@ -105,30 +105,36 @@ function Game({ word, fetchWord }) {
   return (
     <>
       <section className="grid">
-        <div className="container flex-column f-jc-sb">
-          <h2 className="title">
-            Guess <span>the</span> Word
-          </h2>
-          <div>
-            {console.log(`getting word prop from App into Game: ${word}`)}
+        <div className="container flex-column f-jc-c">
+          <div className="wrapper flex-column f-jc-sb">
+            <h2 className="title">
+              Guess <span>the</span> Word
+            </h2>
+            <div>
+              {console.log(`getting word prop from App into Game: ${word}`)}
+            </div>
+            <h1 className="placeholder">{wordInProgress}</h1>
+            <p>{getGuessCountMessage(guessesLeft)}</p>
+            <div className="reserved-place">
+              <h2 className="letters">{letters}</h2>
+            </div>
+            <form className="flex-column">
+              <label htmlFor="letter">Type a letter</label>
+              <input
+                type="text"
+                name="letter"
+                id="letter"
+                value={letter}
+                onChange={handleChange}
+              />
+              <button type="submit" onClick={handleSubmit}>
+                GUESS
+              </button>
+              <div className="reserved-place">
+                <p>{message}</p>
+              </div>
+            </form>
           </div>
-          <h1 className='placeholder'>{wordInProgress}</h1>
-          <p>{getGuessCountMessage(guessesLeft)}</p>
-          <h2>{letters}</h2>
-          <form className="flex-column">
-            <label htmlFor="letter">Type a letter</label>
-            <input
-              type="text"
-              name="letter"
-              id="letter"
-              value={letter}
-              onChange={handleChange}
-            />
-            <button type="submit" onClick={handleSubmit}>
-              GUESS
-            </button>
-            <p>{message}</p>
-          </form>
         </div>
       </section>
     </>
