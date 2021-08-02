@@ -6,6 +6,7 @@ function Game({ word, fetchWord }) {
   const [letters, setLetters] = useState([]);
   const [message, setMessage] = useState("");
   const [guessesLeft, setGuessesLeft] = useState(8);
+  const [guessFeedback, setGuessFeedback] = useState("");
 
   const getPlaceholder = (word) => {
     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
@@ -16,7 +17,6 @@ function Game({ word, fetchWord }) {
 
   useEffect(() => {
     getPlaceholder(word);
-    console.log("...wip from useEffect:" + [...wordInProgress]);
   }, [fetchWord]);
 
   const isLetter = (letter) => {
@@ -53,8 +53,10 @@ function Game({ word, fetchWord }) {
   const makeGuess = (letterUpper) => {
     if (isGoodGuess(letterUpper)) {
       updateWordInProgress(word, wordInProgress, letterUpper);
+      setGuessFeedback("Good guess!");
     } else {
       updateGuessesLeft(guessesLeft);
+      setGuessFeedback(`Oh, no! There's no ${letterUpper}.`);
       console.log(guessesLeft);
     }
   };
@@ -101,7 +103,25 @@ function Game({ word, fetchWord }) {
     setMessage("");
     e.preventDefault();
     acceptInput(letter);
+    checkWin(wordInProgress);
+    console.log(String(wordInProgress));
   };
+
+  //   const isGameOver = () => {
+
+  //   }
+
+  const checkWin = (wordInProgress) => {
+    let ast = "";
+    let hiddenWord = [...wordInProgress].map((eachLetter) => {
+      ast += eachLetter;
+    });
+    console.log("ast:" + ast);
+    if (ast === word) {
+        console.log('win!')
+    }
+  };
+
   return (
     <>
       <section className="grid">
@@ -112,8 +132,12 @@ function Game({ word, fetchWord }) {
             </h2>
             <div>
               {console.log(`getting word prop from App into Game: ${word}`)}
+              {console.log(`getting word in prog: ${wordInProgress}`)}
             </div>
             <h1 className="placeholder">{wordInProgress}</h1>
+            <div className="reserved-place">
+              <p className="feedback">{guessFeedback}</p>
+            </div>
             <p>{getGuessCountMessage(guessesLeft)}</p>
             <div className="reserved-place">
               <h2 className="letters">{letters}</h2>

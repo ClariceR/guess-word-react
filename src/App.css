@@ -37,7 +37,7 @@
 @media (min-width: 48em) {
   .container {
     height: 80vh;
-    min-height: 476px;
+    min-height: 574px;
     width: 60vw;
   }
 }
@@ -64,6 +64,10 @@ span {
 
 .reserved-place {
   height: 60px;
+}
+
+.feedback {
+  font-style: italic;
 }
 
 .letters {
