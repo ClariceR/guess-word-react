@@ -9,7 +9,7 @@ function Game({ word, fetchWord }) {
 
   const getPlaceholder = (word) => {
     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
-      return " * ";
+      return "*";
     });
     return setWordInProgress(hiddenWord);
   };
@@ -39,10 +39,10 @@ function Game({ word, fetchWord }) {
 
   const getGuessCountMessage = (guessesLeft) => {
     console.log(`from get guess count message: ${guessesLeft}`);
-    if  (guessesLeft > 1) {
-        return `You have ${guessesLeft} guesses left.`;
+    if (guessesLeft > 1) {
+      return `You have ${guessesLeft} guesses left`;
     } else {
-        return 'This is your last guess';
+      return "This is your last guess";
     }
   };
 
@@ -104,25 +104,33 @@ function Game({ word, fetchWord }) {
   };
   return (
     <>
-      <h2>Guess the Word</h2>
-      <div>{console.log(`getting word prop from App into Game: ${word}`)}</div>
-      <h1>{wordInProgress}</h1>
-      <p>{getGuessCountMessage(guessesLeft)}</p>
-      <h2>{letters}</h2>
-      <form>
-        <label htmlFor="letter">Type a letter:</label>
-        <input
-          type="text"
-          name="letter"
-          id="letter"
-          value={letter}
-          onChange={handleChange}
-        />
-        <button type="submit" onClick={handleSubmit}>
-          GUESS
-        </button>
-        <p>{message}</p>
-      </form>
+      <section className="grid">
+        <div className="container flex-column f-jc-sb">
+          <h2 className="title">
+            Guess <span>the</span> Word
+          </h2>
+          <div>
+            {console.log(`getting word prop from App into Game: ${word}`)}
+          </div>
+          <h1 className='placeholder'>{wordInProgress}</h1>
+          <p>{getGuessCountMessage(guessesLeft)}</p>
+          <h2>{letters}</h2>
+          <form className="flex-column">
+            <label htmlFor="letter">Type a letter</label>
+            <input
+              type="text"
+              name="letter"
+              id="letter"
+              value={letter}
+              onChange={handleChange}
+            />
+            <button type="submit" onClick={handleSubmit}>
+              GUESS
+            </button>
+            <p>{message}</p>
+          </form>
+        </div>
+      </section>
     </>
   );
 }
