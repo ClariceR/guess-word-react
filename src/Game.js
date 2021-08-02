@@ -7,6 +7,7 @@ function Game({ word, fetchWord }) {
   const [message, setMessage] = useState("");
   const [guessesLeft, setGuessesLeft] = useState(8);
   const [guessFeedback, setGuessFeedback] = useState("");
+  const [gameOverMessage, setGameOverMessage] = useState("");
 
   const getPlaceholder = (word) => {
     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
@@ -103,24 +104,32 @@ function Game({ word, fetchWord }) {
     setMessage("");
     e.preventDefault();
     acceptInput(letter);
-    checkWin(wordInProgress);
+    checkGameOver();
+
     console.log(String(wordInProgress));
   };
 
-  //   const isGameOver = () => {
-
-  //   }
-
-  const checkWin = (wordInProgress) => {
-    let ast = "";
-    let hiddenWord = [...wordInProgress].map((eachLetter) => {
-      ast += eachLetter;
-    });
-    console.log("ast:" + ast);
+  const checkGameOver = () => {
+      let ast = "";
+      [...wordInProgress].map((eachLetter) => {
+        ast += eachLetter;
+      });
     if (ast === word) {
-        console.log('win!')
+      setGameOverMessage("Congratulations, you win!");
+    } else if (guessesLeft === 0) {
+      setGameOverMessage(`You lose! The word was ${word}`);
     }
   };
+
+//   const isWin = (wordInProgress) => {
+//     let ast = "";
+//     [...wordInProgress].map((eachLetter) => {
+//       ast += eachLetter;
+//     });
+//     if (ast === word) {
+//       return true;
+//     }
+//   };
 
   return (
     <>
@@ -130,9 +139,8 @@ function Game({ word, fetchWord }) {
             <h2 className="title">
               Guess <span>the</span> Word
             </h2>
-            <div>
-              {console.log(`getting word prop from App into Game: ${word}`)}
-              {console.log(`getting word in prog: ${wordInProgress}`)}
+            <div className="reserved-place">
+              <h3>{gameOverMessage}</h3>
             </div>
             <h1 className="placeholder">{wordInProgress}</h1>
             <div className="reserved-place">

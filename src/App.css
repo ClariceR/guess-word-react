@@ -20,6 +20,14 @@
   box-shadow: 5px 5px black;
 }
 
+@media (min-width: 48em) {
+  .container {
+    height: 90vh;
+    min-height: 650px;
+    width: 60vw;
+  }
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -32,14 +40,6 @@
 
 .f-jc-c {
   justify-content: center;
-}
-
-@media (min-width: 48em) {
-  .container {
-    height: 80vh;
-    min-height: 574px;
-    width: 60vw;
-  }
 }
 
 .title {
