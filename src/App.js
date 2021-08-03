@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import Header from "./Header";
+import Word from "./Word";
 import WrongLetters from "./WrongLetters";
 import './App.css';
 
@@ -46,6 +47,7 @@ function App() {
         <div className="container flex-column f-jc-c">
           <div className="wrapper flex-column f-jc-sb">
             <Header />
+            <Word />
             <WrongLetters />
           </div>
         </div>
