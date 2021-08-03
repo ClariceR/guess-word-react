@@ -3,6 +3,7 @@ import Loading from "./Loading";
 import Header from "./Header";
 import Word from "./Word";
 import WrongLetters from "./WrongLetters";
+import WinningScreen from "./WinnigScreen";
 import './App.css';
 
 const url =
