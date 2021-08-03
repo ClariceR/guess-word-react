@@ -5,9 +5,8 @@ function Game({ word, fetchWord }) {
   const [letter, setLetter] = useState("");
   const [letters, setLetters] = useState([]);
   const [message, setMessage] = useState("");
-  const [guessesLeft, setGuessesLeft] = useState(8);
+  const [guessesLeft, setGuessesLeft] = useState(3);
   const [guessFeedback, setGuessFeedback] = useState("");
-  const [gameOverMessage, setGameOverMessage] = useState("");
 
   const getPlaceholder = (word) => {
     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
@@ -40,10 +39,19 @@ function Game({ word, fetchWord }) {
 
   const getGuessCountMessage = (guessesLeft) => {
     console.log(`from get guess count message: ${guessesLeft}`);
+    let ast = "";
+    [...wordInProgress].map((eachLetter) => {
+      ast += eachLetter;
+    });
+    if (ast === word) {
+      return 'Congratulations! You win!';
+    }
     if (guessesLeft > 1) {
       return `You have ${guessesLeft} guesses left`;
-    } else {
+    } else if (guessesLeft === 1) {
       return "This is your last guess";
+    } else {
+      return `Game Over! The word was ${word}.`;
     }
   };
 
@@ -104,32 +112,9 @@ function Game({ word, fetchWord }) {
     setMessage("");
     e.preventDefault();
     acceptInput(letter);
-    checkGameOver();
 
     console.log(String(wordInProgress));
   };
-
-  const checkGameOver = () => {
-      let ast = "";
-      [...wordInProgress].map((eachLetter) => {
-        ast += eachLetter;
-      });
-    if (ast === word) {
-      setGameOverMessage("Congratulations, you win!");
-    } else if (guessesLeft === 0) {
-      setGameOverMessage(`You lose! The word was ${word}`);
-    }
-  };
-
-//   const isWin = (wordInProgress) => {
-//     let ast = "";
-//     [...wordInProgress].map((eachLetter) => {
-//       ast += eachLetter;
-//     });
-//     if (ast === word) {
-//       return true;
-//     }
-//   };
 
   return (
     <>
@@ -139,9 +124,9 @@ function Game({ word, fetchWord }) {
             <h2 className="title">
               Guess <span>the</span> Word
             </h2>
-            <div className="reserved-place">
+            {/* <div className="reserved-place">
               <h3>{gameOverMessage}</h3>
-            </div>
+            </div> */}
             <h1 className="placeholder">{wordInProgress}</h1>
             <div className="reserved-place">
               <p className="feedback">{guessFeedback}</p>
