@@ -5,13 +5,16 @@ function Game({ word, fetchWord }) {
   const [letter, setLetter] = useState("");
   const [letters, setLetters] = useState([]);
   const [message, setMessage] = useState("");
-  const [guessesLeft, setGuessesLeft] = useState(3);
+  const [guessesLeft, setGuessesLeft] = useState(2);
   const [guessFeedback, setGuessFeedback] = useState("");
+  const [isWin, setIsWin] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const getPlaceholder = (word) => {
     let hiddenWord = Array.prototype.map.call(word, (eachLetter) => {
       return "*";
     });
+    console.log('from get placeholder I get: ' + hiddenWord)
     return setWordInProgress(hiddenWord);
   };
 
@@ -37,23 +40,50 @@ function Game({ word, fetchWord }) {
     });
   };
 
-  const getGuessCountMessage = (guessesLeft) => {
+  const getGuessCountMessage = () => {
     console.log(`from get guess count message: ${guessesLeft}`);
+    // let ast = "";
+    // [...wordInProgress].map((eachLetter) => {
+    //   ast += eachLetter;
+    // });
+    if (isWin) {
+      // setIsGameOver(true) triggering infinite loop
+      // console.log(isGameOver)
+      //   return "Congratulations! You win!";
+      setGuessFeedback("Congratulations! You win!");
+    }
+    if (guessesLeft > 1) {
+      //   return `You have ${guessesLeft} guesses left`;
+      setGuessFeedback(`You have ${guessesLeft} guesses left`);
+    } else if (guessesLeft === 1) {
+      //   return "This is your last guess";
+      setGuessFeedback("This is your last guess");
+    } else {
+      // setIsGameOver(true) triggering infinite loop;
+      // console.log(isGameOver);
+      //   return `Game Over! The word was ${word}.`;
+      setGuessFeedback(`Game Over! The word was ${word}.`);
+    }
+  };
+
+  const isWinCheck = () => {
     let ast = "";
+    console.log('before wip is: ' + [...wordInProgress]);
     [...wordInProgress].map((eachLetter) => {
       ast += eachLetter;
     });
     if (ast === word) {
-      return 'Congratulations! You win!';
-    }
-    if (guessesLeft > 1) {
-      return `You have ${guessesLeft} guesses left`;
-    } else if (guessesLeft === 1) {
-      return "This is your last guess";
-    } else {
-      return `Game Over! The word was ${word}.`;
+        console.log('ast: ' + ast);
+        console.log('word: ' + word)
+      setIsWin(true);
     }
   };
+
+  useEffect(() => {
+    isWinCheck();
+    console.log("isWin " + isWin)
+    getGuessCountMessage();
+  }, [updateGuessesLeft]);
 
   const isGoodGuess = (letterUpper) => {
     return word.includes(letterUpper);
@@ -124,14 +154,11 @@ function Game({ word, fetchWord }) {
             <h2 className="title">
               Guess <span>the</span> Word
             </h2>
-            {/* <div className="reserved-place">
-              <h3>{gameOverMessage}</h3>
-            </div> */}
             <h1 className="placeholder">{wordInProgress}</h1>
             <div className="reserved-place">
               <p className="feedback">{guessFeedback}</p>
             </div>
-            <p>{getGuessCountMessage(guessesLeft)}</p>
+            <p>{}</p>
             <div className="reserved-place">
               <h2 className="letters">{letters}</h2>
             </div>
