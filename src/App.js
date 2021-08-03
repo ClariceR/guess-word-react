@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import Header from "./Header";
+import WrongLetters from "./WrongLetters";
 import './App.css';
 
 const url =
@@ -45,6 +46,7 @@ function App() {
         <div className="container flex-column f-jc-c">
           <div className="wrapper flex-column f-jc-sb">
             <Header />
+            <WrongLetters />
           </div>
         </div>
       </section>
